@@ -31,18 +31,21 @@ const posts = [
     title: "JavaScript",
     body: "How to write a Javascript in best practice.",
     published: true,
+    author: "1"
   },
   {
     id: "2",
     title: "Java",
     body: "Java is an OOP programing language",
     published: true,
+    author: "1"
   },
   {
     id: "3",
     title: "Angular",
     body: "Angular is a frontend framework to build a webapp",
     published: true,
+    author: "2"
   },
 ];
 
@@ -66,6 +69,7 @@ const typeDefs = `
         title: String!
         body: String!
         published: Boolean!
+        author: User!
     }
 `;
 
@@ -103,6 +107,13 @@ const resolvers = {
       });
     },
   },
+  Post: {
+    author(parent, args, ctx, info) {
+        return users.find(user => {
+          return user.id === parent.author
+        })
+    }
+  }
 };
 
 const server = new GraphQLServer({
